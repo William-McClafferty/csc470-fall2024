@@ -4,21 +4,24 @@ using UnityEngine;
 
 public class PlatformCollider : MonoBehaviour
 {
-    [SerializeField] string playerTag = "Player";
-    [SerializeField] Transform platform;
-    private void OnTriggerEnter(Collider other)
+    [SerializeField] string playerTag = "Player";  // Tag for player
+    [SerializeField] Transform platform;  // Reference to the moving platform
+
+    private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag.Equals(playerTag))
+        if (other.gameObject.CompareTag(playerTag))
         {
-            other.gameObject.transform.parent = platform;
+            // Parent the player's root transform to the platform
+            other.gameObject.transform.SetParent(platform);
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnCollisionExit(Collision other)
     {
-        if (other.gameObject.tag.Equals(playerTag))
+        if (other.gameObject.CompareTag(playerTag))
         {
-            other.gameObject.transform.parent = null;
+            // Detach the player from the platform
+            other.gameObject.transform.SetParent(null);
         }
     }
 }
