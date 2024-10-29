@@ -6,7 +6,7 @@ public class PlatformCollider : MonoBehaviour
 {
     [SerializeField] string playerTag = "Player";
     [SerializeField] Transform platform;
-    private void OnTriggerEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag.Equals(playerTag))
         {
