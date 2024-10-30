@@ -439,7 +439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  distance: 5
+  distance: 9
 --- !u!1 &103036137
 GameObject:
   m_ObjectHideFlags: 0
@@ -2211,7 +2211,7 @@ GameObject:
   - component: {fileID: 901131377}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2302,7 +2302,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -2367,7 +2367,7 @@ Transform:
   m_GameObject: {fileID: 901131376}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 24.3, y: 9.17, z: 23.3}
+  m_LocalPosition: {x: 24.3, y: 10.08, z: 23.3}
   m_LocalScale: {x: 3, y: 5, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3358,10 +3358,9 @@ GameObject:
   - component: {fileID: 1249320442}
   - component: {fileID: 1249320446}
   - component: {fileID: 1249320448}
-  - component: {fileID: 1249320447}
   m_Layer: 0
   m_Name: Blue Moving Platform
-  m_TagString: Untagged
+  m_TagString: MovingPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3466,33 +3465,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 14
   distance: 12
---- !u!54 &1249320447
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1249320441}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &1249320448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4711,7 +4683,7 @@ GameObject:
   - component: {fileID: 1725646228}
   m_Layer: 0
   m_Name: Blue Moving Platform1
-  m_TagString: Untagged
+  m_TagString: MovingPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4843,11 +4815,9 @@ GameObject:
   - component: {fileID: 1743173308}
   - component: {fileID: 1743173307}
   - component: {fileID: 1743173311}
-  - component: {fileID: 1743173312}
-  - component: {fileID: 1743173313}
   m_Layer: 0
   m_Name: Blue Moving Platform2
-  m_TagString: Untagged
+  m_TagString: MovingPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4952,47 +4922,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 17
   distance: 10
---- !u!114 &1743173312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1743173306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c6efe095998d40069a5ee89f30711f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerTag: Player
-  platform: {fileID: 0}
---- !u!54 &1743173313
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1743173306}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1778264848
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,43 +6,39 @@ using TMPro;
 
 public class PlayerCollector : MonoBehaviour
 {
-    public GameObject sphere7;  // The golden sphere (7th sphere)
-    public TMP_Text scoreText;  // TextMeshPro for artifacts collected display
-    public TMP_Text winMessage;  // TextMeshPro for win message
-    public TMP_Text directionsMessage;  // TextMeshPro for directions message
-    public TMP_Text controlText;  // TMP_Text for control instructions
-    public TMP_Text displayControlsText;  // TMP_Text for detailed control display
-    public TMP_Text loseMessage;  // TMP_Text for the lose message
+    public GameObject sphere7;
+    public TMP_Text scoreText;
+    public TMP_Text winMessage;
+    public TMP_Text directionsMessage;
+    public TMP_Text controlText;
+    public TMP_Text displayControlsText;
+    public TMP_Text loseMessage;
+    private int collectedCount = 0;
+    private int totalSpheres = 6;
+    private bool gameWon = false;
+    private bool gameStarted = false;
+    private bool showingControls = false;
+    private bool gameLost = false;
+    private Vector3 spawnPoint;
+    private CharacterController characterController;
+    private Transform currentPlatform = null;
 
-    private int collectedCount = 0;  // Tracks collected artifacts
-    private int totalSpheres = 6;  // Total artifacts to collect before the 7th sphere appears
-    private bool gameWon = false;  // Flag to track if the game is won
-    private bool gameStarted = false;  // Flag to track if the game has started
-    private bool showingControls = false;  // Flag to track which text is active
-    private bool gameLost = false;  // Flag to track if the player has lost
-
-    private Vector3 spawnPoint;  // Store the player's starting position
-    private CharacterController characterController;  // Reference to the CharacterController
+    private bool isOnPlatform = false;
 
     void Start()
     {
-        // Save the player's starting position
         spawnPoint = transform.position;
-
-        // Get the CharacterController component
         characterController = GetComponent<CharacterController>();
 
-        // Hide the 7th sphere, win message, and lose message initially
         if (sphere7 != null) sphere7.SetActive(false);
         if (winMessage != null) winMessage.gameObject.SetActive(false);
         if (loseMessage != null) loseMessage.gameObject.SetActive(false);
 
-        // Display the directions message at the start and freeze the game
         if (directionsMessage != null) directionsMessage.gameObject.SetActive(true);
         if (controlText != null) controlText.gameObject.SetActive(false);
         if (displayControlsText != null) displayControlsText.gameObject.SetActive(false);
 
-        Time.timeScale = 0;  // Freeze the game until the spacebar is pressed
+        Time.timeScale = 0;
     }
 
     void Update()
@@ -52,111 +48,117 @@ public class PlayerCollector : MonoBehaviour
             if (!gameStarted && !gameLost)
             {
                 gameStarted = true;
-                if (directionsMessage != null) directionsMessage.gameObject.SetActive(false);
-                if (controlText != null) controlText.gameObject.SetActive(true);
-                Time.timeScale = 1;  // Resume the game
+                directionsMessage?.gameObject.SetActive(false);
+                controlText?.gameObject.SetActive(true);
+                Time.timeScale = 1;
             }
             else if (gameLost)
             {
-                RestartGame();  // Restart the game if the player lost
+                RestartGame();
             }
         }
 
         if (gameStarted && Input.GetKeyDown(KeyCode.J))
         {
             showingControls = !showingControls;
+            displayControlsText?.gameObject.SetActive(showingControls);
+            controlText?.gameObject.SetActive(!showingControls);
+        }
 
-            if (showingControls)
-            {
-                if (displayControlsText != null) displayControlsText.gameObject.SetActive(true);
-                if (controlText != null) controlText.gameObject.SetActive(false);
-            }
-            else
-            {
-                if (displayControlsText != null) displayControlsText.gameObject.SetActive(false);
-                if (controlText != null) controlText.gameObject.SetActive(true);
-            }
+        if (isOnPlatform && currentPlatform == null)
+        {
+            UnparentPlayer();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (gameWon || gameLost) return;  // Stop if the game is over
+        if (gameWon || gameLost) return;
 
         if (other.CompareTag("PlayerObj"))
         {
-            Destroy(other.gameObject);  // Destroy the collected artifact
-            collectedCount++;  // Increment the counter
-            UpdateScoreText();  // Update the display
+            Destroy(other.gameObject);
+            collectedCount++;
+            UpdateScoreText();
 
             if (collectedCount == totalSpheres && sphere7 != null)
             {
-                sphere7.SetActive(true);  // Reveal the 7th sphere
+                sphere7.SetActive(true);
                 Debug.Log("All artifacts collected! The golden sphere has appeared.");
             }
 
             if (collectedCount == totalSpheres + 1)
             {
-                GameOver();  // Trigger game-over logic
+                GameOver();
             }
         }
         else if (other.CompareTag("TeleportObject"))
         {
-            TeleportToSpawn();  // Teleport the player to the spawn point
+            TeleportToSpawn();
         }
         else if (other.CompareTag("Lava"))
         {
-            LoseGame();  // Trigger lose game logic
+            LoseGame();
         }
+        else if (other.CompareTag("MovingPlatform"))
+        {
+            ParentPlayerToPlatform(other.transform);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("MovingPlatform") && currentPlatform == other.transform)
+        {
+            UnparentPlayer();
+        }
+    }
+
+    private void ParentPlayerToPlatform(Transform platform)
+    {
+        currentPlatform = platform;
+        transform.SetParent(currentPlatform);
+        isOnPlatform = true;
+        Debug.Log("Player is now a child of the platform.");
+    }
+
+    private void UnparentPlayer()
+    {
+        transform.SetParent(null);
+        currentPlatform = null;
+        isOnPlatform = false;
+        Debug.Log("Player left the platform and is no longer a child.");
     }
 
     private void TeleportToSpawn()
     {
-        // Disable the CharacterController temporarily
         characterController.enabled = false;
-
-        // Set the player's position to the spawn point
         transform.position = spawnPoint;
-        Debug.Log("Teleported to the starting point.");
-
-        // Re-enable the CharacterController
         characterController.enabled = true;
+        Debug.Log("Teleported to the starting point.");
     }
 
     private void UpdateScoreText()
     {
-        if (scoreText != null)
-        {
-            scoreText.text = $"Artifacts Found: {collectedCount}/7";
-        }
+        scoreText?.SetText($"Artifacts Found: {collectedCount}/7");
     }
 
     private void GameOver()
     {
-        gameWon = true;  // Mark the game as won
-
-        if (winMessage != null)
-        {
-            winMessage.gameObject.SetActive(true);  // Display the win message
-        }
-
-        Time.timeScale = 0;  // Stop the game
+        gameWon = true;
+        winMessage?.gameObject.SetActive(true);
+        Time.timeScale = 0;
     }
 
     private void LoseGame()
     {
-        gameLost = true;  // Mark the game as lost
-
-        if (loseMessage != null)
-        {
-            loseMessage.gameObject.SetActive(true);  // Display the lose message
-        }
-
-        Time.timeScale = 0;  // Stop the game
+        gameLost = true;
+        loseMessage?.gameObject.SetActive(true);
+        Time.timeScale = 0;
     }
 
     private void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);  // Reload the current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
