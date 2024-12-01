@@ -31,9 +31,11 @@ Input
 •	Direct inputs for controls are the keys
 
 
+
 Visual Style
 
 •	ProBuilder, Unity Models, PolyPizza/Internet Models
+
 
 
 Audio Style
@@ -41,9 +43,11 @@ Audio Style
 •	Jump sound while jumping, walking sound, death sound, etc.
 
 
+
 Interface Sketches
 
 •	Reading different signs, title screen, storyboard
+
 
 
 Story/Theme Description
@@ -51,6 +55,7 @@ Story/Theme Description
 •	Each story has a story board
 
 •	The Egyptian princess has been kidnapped and you as the lead knight of Egypt must follow the clues leading to where she may be. You’ve heard clues that she may be near the great pyramid, so you must try to find her by going towards the pyramid, leading into the first level which is traversing the desert.
+
 
 
 Timeline
@@ -76,9 +81,11 @@ Timeline
 •	12/13 Submit and Present!
 
 
+
 Low-Bar
 
 •	Finish 1 level and Core Mechanics
+
 
 
 High-Bar
