@@ -7,16 +7,16 @@ public class PlatformerController : MonoBehaviour
     public CharacterController cc;
     public Camera playerCamera;
     float moveSpeed = 10f;
-    float dashSpeed = 60f;
-    float jumpVelocity = 25f;
+    float dashSpeed = 15f;
+    float jumpVelocity = 20f;
     float fallingTime = 0f;
     float yVelocity = 0f;
-    float gravity = -75;
+    float gravity = -75f;
     float rotationSpeed = 10f;
 
     void Update()
     {
-        float hAxis = -Input.GetAxisRaw("Horizontal");
+        float hAxis = -Input.GetAxisRaw("Horizontal"); 
         float vAxis = -Input.GetAxisRaw("Vertical");
 
         float currentSpeed = Input.GetKey(KeyCode.Z) ? dashSpeed : moveSpeed;
@@ -60,10 +60,5 @@ public class PlatformerController : MonoBehaviour
         move.y += yVelocity * Time.deltaTime;
 
         cc.Move(move);
-
-        if (playerCamera != null)
-        {
-            playerCamera.transform.position = new Vector3(transform.position.x, playerCamera.transform.position.y, transform.position.z);
-        }
     }
 }
