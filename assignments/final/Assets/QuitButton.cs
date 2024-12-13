@@ -1,11 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class QuitButton : MonoBehaviour
 {
-    public void LoadTitleScreen()
+    public void LoadSampleScene()
     {
-        Debug.Log("LoadTitleScreen called");
         SceneManager.LoadScene("TitleScreen");
     }
 }
